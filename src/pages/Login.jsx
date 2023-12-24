@@ -12,13 +12,17 @@ export const Login = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+
   const [user,setUser] = useState({
     kullaniciAdi:"",
     sifre:"",
   })
-  const {login} = useContext(AuthContext)
+
+
+  const { login } = useContext(AuthContext)
   
     const showToastError = (message) => {
       toast.error(message, {
@@ -56,7 +60,7 @@ export const Login = () => {
       });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
 
       // Formdaki input elemanlarına erişim
@@ -78,7 +82,18 @@ export const Login = () => {
         } else if (!enteredPassword) {
           showToastError('Şifre boş bırakılamaz.');
         } else {
-          login(user)
+          const result = await login(user);
+          
+          if(result === "Kullanıcı bulunamadı") {
+            showToastError(result + ".");
+            return
+          }
+          
+          if(result === "Parola hatası") {
+            showToastError(result + ".");
+            return
+          }
+          
           // Buraya ulaşmak, her ikisi de girilmiş demektir.
           showToastSucces('Giriş başarılı!'); // Ya da istediğiniz başka bir mesaj.
           navigate("/")
@@ -87,9 +102,11 @@ export const Login = () => {
 
       // Input değerlerini konsola yazdır
       console.log('Email:', enteredEmail);
-      console.log('Şifre:', enteredPassword);       
-    
+      console.log('Şifre:', enteredPassword);      
     };
+
+
+
 
   return (
     <div className='flex h-screen items-center justify-center'>

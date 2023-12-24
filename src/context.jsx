@@ -17,10 +17,8 @@ export const AuthContextProvider = ({ children }) => {
                 credentials: 'include', // Bu, withCredentials'ın karşılığıdır
                 body: JSON.stringify(user),
             });
-
             const data = await res.json();
-            console.log(data)
-            setCurrentUser(data);
+            return data
         } catch (err) {
             setError(err.message || "Bir hata oluştu");
         }
