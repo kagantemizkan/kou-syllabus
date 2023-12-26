@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useContext } from 'react'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useClickAway } from 'react-use'
@@ -10,13 +10,27 @@ import { CgClose } from "react-icons/cg";
 import { MdOutlineEdit } from "react-icons/md";
 import { BsCalendar2Week } from "react-icons/bs";
 import BlankProfilePic from "../assets/blankpp.webp"
+import { AuthContext } from '../context.jsx';
+import { useNavigate } from "react-router-dom";
 
 export const Sidebar = () => {
+  const { logout } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
   useClickAway(ref, () => setOpen(false))
   const toggleSidebar = () => setOpen(prev => !prev)
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+
+  const logoutFuncs = async () => {
+    toggleSidebar(); // Close the sidebar when logout is triggered
+    await logout(); // Trigger the logout function
+    navigate("/login")
+  }
+
 
   return (
     <>
@@ -44,7 +58,11 @@ export const Sidebar = () => {
               <div className="flex items-center justify-between p-5 border-b-2 border-zinc-800">
                 <div className='flex flex-row items-center gap-5'>
                   <img src={BlankProfilePic} className='w-12 rounded-full' alt="Profile Picture" />
-                  <span>Yavuz Selim FATİHOĞLU</span>
+                  <div className='flex flex-col'>                 
+                    <span className='text-sm text-zinc-300/80'>{user.unvan}</span> 
+                    <span>{user.ad + " " + user.soyad}</span>
+                  </div>
+
                 </div>
                 <button onClick={toggleSidebar} className="p-3 border-2 border-zinc-800 rounded-xl hover:border-zinc-700 hover:shadow-lg transition-all duration-300" aria-label="close sidebar">
                   <AiOutlineRollback />
@@ -52,21 +70,36 @@ export const Sidebar = () => {
               </div>
               <ul>
                 {items.map((item, idx) => {
-                  const { title, to, Icon } = item
+                  const { title, to, Icon } = item;
                   return (
-                    <li key={title}>
-                      <Link
-                        onClick={toggleSidebar}
-                        to={to}
-                        className="flex items-center justify-between gap-5 p-5 transition-all border-b-2 hover:bg-zinc-900 border-zinc-800"
-                      >
-                        <motion.span {...framerText(idx)}>{title}</motion.span>
-                        <motion.div {...framerIcon}>
-                          <Icon className="text-2xl" />
-                        </motion.div>
-                      </Link>
+                    <li key={idx}>
+                      {title === 'Çıkış Yap' ? (
+                        <Link
+                          onClick={() => {
+                            logoutFuncs()
+                          }}
+                          className="flex items-center justify-between gap-5 p-5 transition-all border-b-2 hover:bg-zinc-900 border-zinc-800"
+                        >
+                          <motion.span {...framerText(idx)}>{title}</motion.span>
+                          <motion.div {...framerIcon}>
+                            <Icon className="text-2xl" />
+                          </motion.div>
+                        </Link>
+                      ) : (
+                        // For other items, use the Link component
+                        <Link
+                          onClick={toggleSidebar}
+                          to={to}
+                          className="flex items-center justify-between gap-5 p-5 transition-all border-b-2 hover:bg-zinc-900 border-zinc-800"
+                        >
+                          <motion.span {...framerText(idx)}>{title}</motion.span>
+                          <motion.div {...framerIcon}>
+                            <Icon className="text-2xl" />
+                          </motion.div>
+                        </Link>
+                      )}
                     </li>
-                  )
+                  );
                 })}
               </ul>
             </motion.div>

@@ -48,3 +48,49 @@ body {
 .slideshowDot.active {
   background-color: #6a0dad;
 }
+
+
+/**/
+
+
+@keyframes growWidth {
+  0% {
+    width: 122px;
+    height: 41px;
+  }
+  100% {
+    width: 80px;
+    height: 41px;
+  }
+}
+
+
+.animation1 {
+  animation-name: growWidth;
+  animation-duration: 0.3s, 0.3s;
+  animation-timing-function: ease, ease;
+  animation-fill-mode: both, both;
+  animation-delay: 0s, 0.3s; 
+} 
+ 
+
+@keyframes growWidth2 {
+  0% {
+    width: 100px;
+    height: 41px;
+  }
+  100% {
+    width: 132px;
+    height: 41px;
+  }
+}
+
+
+.animation2 {
+  animation-name: growWidth2;
+  animation-duration: 0.3s, 0.3s;
+  animation-timing-function: ease, ease;
+  animation-fill-mode: both, both;
+  animation-delay: 0s, 0.3s; 
+}
+

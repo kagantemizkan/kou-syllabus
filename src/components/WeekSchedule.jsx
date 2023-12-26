@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Event from './Event';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const WeekSchedule = () => {
+const WeekSchedule = (props) => {
     const [schedule, setSchedule] = useState([]);
 
     const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma'];
@@ -79,6 +80,12 @@ const WeekSchedule = () => {
         });
 
         // SALI
+        newSchedule[1].days[tuesdayIndex].events.push({
+            name: 'Elektrik Elektronik Devreler',
+            instructor: 'Doç. Dr. Mustafa Hikmet Bilgehan UÇAR',
+            courseClass: '1040',
+            color: 'red',
+        });
         newSchedule[1].days[tuesdayIndex].events.push({
             name: 'Elektrik Elektronik Devreler',
             instructor: 'Doç. Dr. Mustafa Hikmet Bilgehan UÇAR',
@@ -243,8 +250,9 @@ const WeekSchedule = () => {
     }, []);
 
     return (
-        <div className="rounded-xl my-5 overflow-hidden max-w-[1355px] border-2 border-zinc-800 bg-zinc-800/20 shadow-lg">
-            <table className="w-full">
+
+        <div className="rounded-xl my-5 overflow-hidden border-2 border-zinc-800 bg-zinc-800/20 shadow-lg">
+            <table className="w-full table-auto">
                 <thead>
                     <tr>
                         <th className="p-2 max-w-0 border-zinc-800 border-2 border-t-0 border-l-0 h-14">
@@ -266,16 +274,37 @@ const WeekSchedule = () => {
                             </td>
                             {row.days.map(day => (
                                 <td key={day.day} className="border-zinc-800 border-2 border-b-0 border-r-0 p-2 min-w-[165px]">
-                                    <div className='flex gap-3 content-center justify-center'>
-                                        {day.events.map((event, eventIndex) => (
-                                            <Event
-                                                key={eventIndex}
-                                                eventName={event.name}
-                                                instructor={event.instructor}
-                                                courseClass={event.courseClass}
-                                                color={event.color}
-                                            />
-                                        ))}
+                                    <div className='flex flex-col gap-3 justify-center items-center'>
+                                        <div className='flex flex-row gap-3 content-center justify-center'>
+                                            {day.events.map((event, eventIndex) => (
+                                                <Event
+                                                    key={eventIndex}
+                                                    eventName={event.name}
+                                                    instructor={event.instructor}
+                                                    courseClass={event.courseClass}
+                                                    color={event.color}
+                                                    
+                                                    editMode={props.editMode}
+
+                                                    deletingClass={props.deletingClass} 
+                                                    setDeletingClass={props.setDeletingClass}
+                                                />
+                                            ))}
+                                        </div>
+                                        <AnimatePresence>
+                                            {props.editMode === true && (
+                                                <motion.button
+                                                    initial={{ opacity: 0, scale: 0.4 }} 
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                    exit={{ opacity: 0, scale: 0.6 }} 
+                                                    onClick={() => setEditMode(!editMode)}
+                                                    transition= {{ duration: 0.2, ease: 'easeInOut' }}
+                                                    className='flex justify-center gap-3 max-w-[180px] items-center px-4 py-2 text-lg text-zinc-200 bg-antiqueSteel-700/20 rounded-xl border-2 border-antiqueSteel-900 hover:border-antiqueSteel-700 hover:shadow-lg transition-all duration-300'>
+                                                    <p className='text-base'>Ders Ekle</p>
+                                                </motion.button>
+                                            )}
+                                        </AnimatePresence>
+
                                     </div>
 
                                 </td>

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React , { useEffect } from "react";
 import * as ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
@@ -11,6 +11,7 @@ import { Login } from "./pages/Login";
 import { Programlarım } from "./pages/Programlarım";
 import { ProgramHazirla } from "./pages/ProgramHazirla";
 import { AuthContextProvider } from "./context";
+
 
 
 const router = createBrowserRouter([

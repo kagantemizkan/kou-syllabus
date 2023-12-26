@@ -18,6 +18,7 @@ export const AuthContextProvider = ({ children }) => {
                 body: JSON.stringify(user),
             });
             const data = await res.json();
+            setCurrentUser(data)
             return data
         } catch (err) {
             setError(err.message || "Bir hata oluştu");
@@ -30,7 +31,7 @@ export const AuthContextProvider = ({ children }) => {
                 method: 'POST',
                 credentials: 'include',
             });
-
+            console.log("çıkış yapıldı")
             setCurrentUser(null);
         } catch (err) {
             setError(err.message || "Bir hata oluştu");
