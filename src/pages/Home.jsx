@@ -53,6 +53,7 @@ export const Home = () => {
   if (user && user.ad !== null && user.ad !== undefined) {
     return (
       <div>
+     
         <nav className="flex items-center justify-between px-5 py-2 border-b-2 border-zinc-800">
           <div className="flex items-center gap-3">
             <Sidebar />
@@ -63,6 +64,7 @@ export const Home = () => {
             <p>Kocaeli Üniversitesi</p>
           </a>
         </nav>
+
         {/* HOME PAGE START */}
         <div className="p-7 flex gap-10">
 

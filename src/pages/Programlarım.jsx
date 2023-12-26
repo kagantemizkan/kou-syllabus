@@ -28,19 +28,11 @@ export const Programlarım = () => {
     <div>
       <Modal editMode={editMode} setEditMode={setEditMode} deletingClass={deletingClass} setDeletingClass={setDeletingClass} />
 
-      <nav className="flex items-center justify-between px-5 py-2 border-b-2 border-zinc-800">
+      <nav className="flex justify-between px-5 py-2 border-b-2 border-zinc-800">
         <div className="flex items-center gap-3">
           <Sidebar />
           <p>Ders Programım</p>
         </div>
-      </nav>
-
-      
-      <motion.div
-        initial={{ opacity: 0, y: 50 }} // İlk render'da saydam ve aşağıdan gelen pozisyon
-        animate={controls}
-        className="flex flex-col items-center justify-center p-4"
-      >
         <motion.button
           onClick={toggleEditMode}
           className="flex gap-3 items-center px-4 py-2 text-lg text-zinc-200 bg-purple-700/20 rounded-xl border border-purple-900 hover:border-purple-700 hover:shadow-lg active:border-purple-500 transition-all duration-300"
@@ -51,6 +43,14 @@ export const Programlarım = () => {
           <p className='text-base text font-medium'>Dersleri Düzenle</p>
           <MdOutlineEdit className="text-[26px]" />
         </motion.button>
+      </nav>
+
+
+      <motion.div
+        initial={{ opacity: 0, y: 50 }} // İlk render'da saydam ve aşağıdan gelen pozisyon
+        animate={controls}
+        className="flex flex-col items-center justify-center p-4"
+      >
         <WeekSchedule editMode={editMode} deletingClass={deletingClass} setDeletingClass={setDeletingClass} />
       </motion.div>
     </div>

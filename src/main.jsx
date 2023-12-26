@@ -1,10 +1,11 @@
-import React , { useEffect } from "react";
+import React, { useEffect } from "react";
 import * as ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
@@ -34,10 +35,11 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+
   <AuthContextProvider>
-     <React.StrictMode> 
-    <RouterProvider router={router} />
-  </React.StrictMode>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
   </AuthContextProvider>
- 
+
 );

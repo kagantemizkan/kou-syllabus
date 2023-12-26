@@ -251,7 +251,7 @@ const WeekSchedule = (props) => {
 
     return (
 
-        <div className="rounded-xl my-5 overflow-hidden border-2 border-zinc-800 bg-zinc-800/20 shadow-lg">
+        <div className="rounded-xl my-2 overflow-hidden border-2 border-zinc-800 bg-zinc-800/20 shadow-lg">
             <table className="w-full table-auto">
                 <thead>
                     <tr>
