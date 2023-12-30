@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Sidebar } from '../components/Sidebar';
 import { RiMessage3Line } from "react-icons/ri";
 import { HiPencilSquare } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../context.jsx';
 
 import KOULogo from '../assets/kouLogo.webp'
 import KOUResim1 from '../assets/kou_resim1.jpg'
@@ -22,6 +23,8 @@ export const Home = () => {
   const images = [KOUResim1, KOUResim4, KOUResim2, KOUResim3];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  const [events, setEvents] = useState([])
+
   useEffect(() => {
     // Function to change the image every 5 seconds
     const interval = setInterval(() => {
@@ -32,15 +35,21 @@ export const Home = () => {
     return () => clearInterval(interval);
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
+  const { hocaDersler } = useContext(AuthContext);
 
 
   useEffect(() => {
-    checkUser()
-  }, [])
+    const fetchData = async () => {
+      checkUser();
+      setEvents(await hocaDersler(user.id));
+    };
+    fetchData();
+  }, []);
+  
 
   const checkUser = () => {
 
-    if (user && user.ad !== null && user.ad !== undefined) {
+    if (user && user.id !== null && user.id !== undefined) {
       // User exists and has 'ad' property
       return;
     } else {
@@ -50,10 +59,10 @@ export const Home = () => {
   };
 
 
-  if (user && user.ad !== null && user.ad !== undefined) {
+  if (user && user.id !== null && user.id !== undefined) {
     return (
       <div>
-     
+
         <nav className="flex items-center justify-between px-5 py-2 border-b-2 border-zinc-800">
           <div className="flex items-center gap-3">
             <Sidebar />
@@ -127,34 +136,15 @@ export const Home = () => {
               Yarınki Derslerim
             </div>
             <div className='grid grid-cols-3 gap-3'>
-              <Event
-                key={1}
-                eventName={"Yazılım Geliştirme Laboratuvarı-I"}
-                instructor={"Öğr. Gör. Yavuz Selim FATİHOĞLU"}
-                courseClass={"Tanımsız"}
-                color={"fuchsia"}
-              />
-              <Event
-                key={1}
-                eventName={"React-Native Framework ile Mobil Programlama"}
-                instructor={"Öğr. Gör. Yavuz Selim FATİHOĞLU"}
-                courseClass={"Tanımsız"}
-                color={"red"}
-              />
-              <Event
-                key={1}
-                eventName={"Görsel Programlama"}
-                instructor={"Öğr. Gör. Yavuz Selim FATİHOĞLU"}
-                courseClass={"Tanımsız"}
-                color={"emerald"}
-              />
-              <Event
-                key={1}
-                eventName={"Sanal Gerçeklik"}
-                instructor={"Öğr. Gör. Yavuz Selim FATİHOĞLU"}
-                courseClass={"Tanımsız"}
-                color={"yellow"}
-              />
+              {events.map((event) => (
+                <Event
+                  key={event.key}
+                  eventName={event.ders_adi}
+                  instructor={event.instructor}
+                  courseClass={event.courseClass}
+                  color={event.color}
+                />
+              ))}
             </div>
           </div>
           <div className=' flex flex-col gap-6'>

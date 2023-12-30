@@ -4,7 +4,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Event(props) {
-
+    
     const colorVariants = {
         fuchsia: 'text-fuchsia-400 bg-fuchsia-700/20',
         red: 'text-red-400 bg-red-700/20',

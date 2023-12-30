@@ -2,38 +2,43 @@ import React, { useState, useContext, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import KOULogo from '../assets/kouLogo.webp';
 import Lottie from 'lottie-react';
-import LoadingLottie from '../assets/animatedLoading.json';
-import { CiLogin } from 'react-icons/ci';
+import { IoChevronBackOutline } from "react-icons/io5";
+import LoadingLottie from '../assets/loadingRed.json';
+import { TiUserAddOutline } from "react-icons/ti";
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context.jsx';
 import { motion, useAnimation } from 'framer-motion';
 
-export const Login = () => {
+export const Register = () => {
   const navigate = useNavigate();
   const userLocalStorage = JSON.parse(localStorage.getItem('user'));
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState();
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+
 
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [surnameError, setSurnameError] = useState(false);
+
 
   const [user, setUser] = useState({
-    email: '',
-    password: '',
-    userType: 'hocalar',
+    kullaniciAdi: '',
+    sifre: '',
   });
 
   useEffect(() => {
-    checkUser()
+    checkUser();
   }, []);
 
   const checkUser = () => {
-    if (userLocalStorage && userLocalStorage.id !== null && userLocalStorage.id !== undefined) {
+    if (userLocalStorage && userLocalStorage.ad !== null && userLocalStorage.ad !== undefined) {
       navigate('/');
       console.log('var');
-      return;
     } else {
       console.log('yok');
       return;
@@ -82,13 +87,18 @@ export const Login = () => {
 
     const enteredEmail = email.trim();
     const enteredPassword = password.trim();
-    user.email = enteredEmail;
-    user.password = enteredPassword;
+    const enderedName = name.trim();
+    const enteredSurname = surname.trim();
 
-    if (!enteredEmail && !enteredPassword) {
+    user.kullaniciAdi = enteredEmail;
+    user.sifre = enteredPassword;
+
+    if (!enteredEmail && !enteredPassword && !enderedName && !enteredSurname) {
       setEmailError(true);
       setPasswordError(true);
-      showToastError('Şifre veya Email boş bırakılamaz.');
+      setNameError(true);
+      setSurnameError(true);
+      showToastError('Lütfen gerekli yerleri doldurun.');
       setIsLoading(false);
     } else {
       setEmailError(!enteredEmail);
@@ -134,13 +144,39 @@ export const Login = () => {
       className="flex h-screen items-center justify-center"
     >
       <Toaster />
-      <div className='flex flex-col items-center border-2 border-zinc-800 rounded-xl w-96 p-8 shadow-lg bg-zinc-800/20 hover:border-zinc-700 hover:shadow-lg transition-all duration-300'>
+      <div className='flex relative flex-col items-center border-2 border-zinc-800 rounded-xl px-6 py-8 shadow-lg bg-zinc-800/20 hover:border-zinc-700 hover:shadow-lg transition-all duration-300'>
+
+        <button onClick={() => navigate("/login")} className='absolute flex flex-row items-center left-2 top-2.5 border-2 border-zinc-800 rounded-lg hover:border-zinc-700 hover:shadow-lg transition-all duration-300'>
+          <IoChevronBackOutline size={28} />
+          <p className='py-2 pr-2.5 pl-0.5'>Giriş Yap</p>
+        </button>
+
         <img src={KOULogo} className='w-32 mb-8' alt="Kocaeli Universitesi Logo" />
 
-        <h2 className='text-2xl font-semibold mb-10 text-center'>Kocaeli Üniversitesi Syllbus'a Giriş Yap</h2>
+        <h2 className='text-2xl font-semibold mb-10 text-center w-72'>Kocaeli Üniversitesi Syllbus'a Kayıt Ol</h2>
 
-        <form className='flex flex-col gap-4 items-center' onSubmit={handleSubmit}>
-
+        <form className='flex flex-col gap-3 items-center' onSubmit={handleSubmit}>
+          
+          <div className='flex flex-row gap-3 max-w-[320px]'>
+            <input
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Ad"
+              className={`w-[154px] font-sans text-sm font-normal leading-6 p-2 rounded-md text-gray-300 bg-zinc-800 border ${emailError ? 'border-red-500' : 'border-zinc-700'
+                } shadow-sm hover:border-blue-100 focus:border-blue-300 focus:ring-2 focus:ring-zinc-500 hover:shadow-lg transition-all duration-300`}
+              type="text"
+            />
+            <input
+              name="surname"
+              value={surname}
+              onChange={(e) => setSurname(e.target.value)}
+              placeholder="Soyad"
+              className={`w-[154px] font-sans text-sm font-normal leading-6 p-2 rounded-md text-gray-300 bg-zinc-800 border ${passwordError ? 'border-red-500' : 'border-zinc-700'
+                } shadow-sm hover:border-blue-100 focus:border-blue-300 focus:ring-2 focus:ring-zinc-500 hover:shadow-lg transition-all duration-300`}
+              type="text"
+            />
+          </div>
           <input
             name="email"
             value={email}
@@ -159,12 +195,12 @@ export const Login = () => {
               } shadow-sm hover:border-blue-100 focus:border-blue-300 focus:ring-2 focus:ring-zinc-500 hover:shadow-lg transition-all duration-300`}
             type="password"
           />
+
           <div className="flex flex-row gap-4 mt-3">
-            <button className="px-4 py-2 text-red-400 bg-red-700/20 rounded-md border border-red-900 hover:border-red-700 hover:shadow-lg transition-all duration-300">Şifremi Unuttum</button>
             <motion.button
               type="submit"
               onClick={() => handleSubmit()}
-              className={`gap-2 ${isLoading == null ? null : isLoading ? 'animation1' : 'animation2'} h-[41px] w-[132px] flex items-center px-4 py-2 text-green-400 bg-green-700/20 rounded-md border border-green-900 hover:border-green-700 hover:shadow-lg transition-all duration-300`}
+              className={`gap-2 ${isLoading == null ? null : isLoading ? 'animation1' : 'animation2'} h-[41px] w-[132px] flex items-center px-4 py-2 text-orange-400 bg-orange-700/20 rounded-md border border-orange-900 hover:border-orange-700 hover:shadow-lg transition-all duration-300`}
             >
               {isLoading ? (
                 <motion.div
@@ -182,19 +218,12 @@ export const Login = () => {
                     className="truncate"
                     style={{ width: '100%' }} // Animasyonun boyutunu burada tanımlayın
                   >
-                    Giriş Yap
+                    Kayıt Ol
                   </motion.p>
-                  <CiLogin size={22} />
+                  <TiUserAddOutline size={28} />
                 </React.Fragment>
               )}
             </motion.button>
-          </div>
-          <div className='border-t w-80 border border-zinc-700 rounded-xl mt-3 shadow-xl' />
-          <div className='text-gray-300 text-sm flex flex-row justify-center items-center gap-0.5 -mb-2.5'>
-            <p>Hesabın yok mu?</p>
-            <button onClick={() => navigate("/register")} className='text-green-400 hover:text-green-300 font-semibold p-1 transition-all duration-300'>
-              Kaydol
-            </button>
           </div>
         </form>
       </div>

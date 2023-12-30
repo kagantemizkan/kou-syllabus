@@ -9,7 +9,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const login = async (user) => {
         try {
-            const res = await fetch("http://localhost:8800/user/login", {
+            const res = await fetch("http://localhost:8800/auth/login", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -21,20 +21,38 @@ export const AuthContextProvider = ({ children }) => {
             setCurrentUser(data)
             return data
         } catch (err) {
-            setError(err.message || "Bir hata oluştu");
+            console.log(err.message || "Bir hata oluştu");
         }
     };
 
     const logout = async () => {
         try {
-            await fetch("http://localhost:8800/user/logout", {
+            fetch("http://localhost:8800/auth/logout", {
                 method: 'POST',
                 credentials: 'include',
             });
             console.log("çıkış yapıldı")
             setCurrentUser(null);
         } catch (err) {
-            setError(err.message || "Bir hata oluştu");
+            console.log(err.message || "Bir hata oluştu");
+        }
+    };
+
+
+    const hocaDersler = async (hocaID) => {
+        try {
+            const res = await fetch(`http://localhost:8800/lesson/myLessons/${hocaID}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include', 
+            });
+            const data = await res.json();
+            console.log(data)
+            return data
+        } catch (err) {
+            console.log(err.message || "Bir hata oluştu");
         }
     };
 
@@ -43,7 +61,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [currentUser]);
 
     return (
-        <AuthContext.Provider value={{ currentUser, login, logout, error }}>
+        <AuthContext.Provider value={{ currentUser, login, logout, hocaDersler, error }}>
             {children}
         </AuthContext.Provider>
     );

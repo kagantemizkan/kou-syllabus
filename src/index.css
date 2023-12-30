@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-zinc-900 text-zinc-200;
+  @apply dark:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-800 bg-white text-zinc-900;
 }
 
 /* Slideshow */
@@ -21,7 +21,6 @@ body {
 
 .slide {
   display: inline-block;
-
   height: 400px;
   width: 100%;
   border-radius: 40px;

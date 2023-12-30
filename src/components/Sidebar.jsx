@@ -36,7 +36,7 @@ export const Sidebar = () => {
     <>
       <button
         onClick={toggleSidebar}
-        className="p-3 border-2 border-zinc-800 rounded-xl hover:border-zinc-700 hover:shadow-lg transition-all duration-300"
+        className="p-3 border-2 dark:border-zinc-800 border-gray-200 hover:border-gray-400 rounded-xl dark:hover:border-zinc-700 hover:shadow-lg transition-all duration-300"
         aria-label="toggle sidebar"
       >
         <GiHamburgerMenu />
@@ -51,21 +51,21 @@ export const Sidebar = () => {
             ></motion.div>
             <motion.div
               {...framerSidebarPanel}
-              className="fixed top-0 bottom-0 left-0 z-50 w-full h-screen max-w-xs border-r-2 border-zinc-800 bg-zinc-900"
+              className="fixed top-0 bottom-0 left-0 z-50 w-full h-screen max-w-xs border-r-2 border-gray-200 bg-white dark:border-zinc-800 dark:bg-zinc-900"
               ref={ref}
               aria-label="Sidebar"
             >
-              <div className="flex items-center justify-between p-5 border-b-2 border-zinc-800">
+              <div className="flex items-center justify-between p-5 border-b-2 border-gray-200 dark:border-zinc-800">
                 <div className='flex flex-row items-center gap-5'>
                   <img src={BlankProfilePic} className='w-12 rounded-full' alt="Profile Picture" />
                   <div className='flex flex-col'>                 
-                    <span className='text-sm text-zinc-300/80'>{user.unvan}</span> 
-                    <span>{user.ad + " " + user.soyad}</span>
+                    <span className='text-sm text-zinc-500 dark:text-zinc-300/80'>{user.hoca_unvan}</span> 
+                    <span>{user.hoca_ad + " " + user.hoca_soyad}</span>
                   </div>
 
                 </div>
-                <button onClick={toggleSidebar} className="p-3 border-2 border-zinc-800 rounded-xl hover:border-zinc-700 hover:shadow-lg transition-all duration-300" aria-label="close sidebar">
-                  <AiOutlineRollback />
+                <button onClick={toggleSidebar} className="p-3 border-2 border-gray-200 hover:border-gray-400 dark:border-zinc-800 rounded-xl dark:hover:border-zinc-700 hover:shadow-lg transition-all duration-300" aria-label="close sidebar">
+                  <AiOutlineRollback className='dark:text-zinc-200'/>
                 </button>
               </div>
               <ul>
@@ -78,7 +78,7 @@ export const Sidebar = () => {
                           onClick={() => {
                             logoutFuncs()
                           }}
-                          className="flex items-center justify-between gap-5 p-5 transition-all border-b-2 hover:bg-zinc-900 border-zinc-800"
+                          className="flex items-center justify-between gap-5 p-5 transition-all border-b-2 border-gray-200 dark:border-zinc-800"
                         >
                           <motion.span {...framerText(idx)}>{title}</motion.span>
                           <motion.div {...framerIcon}>
@@ -90,7 +90,7 @@ export const Sidebar = () => {
                         <Link
                           onClick={toggleSidebar}
                           to={to}
-                          className="flex items-center justify-between gap-5 p-5 transition-all border-b-2 hover:bg-zinc-900 border-zinc-800"
+                          className="flex items-center justify-between gap-5 p-5 transition-all border-b-2 border-gray-200 dark:border-zinc-800"
                         >
                           <motion.span {...framerText(idx)}>{title}</motion.span>
                           <motion.div {...framerIcon}>
@@ -114,7 +114,8 @@ const items = [
   { title: 'Ana Sayfa', Icon: BiHomeSmile, to: '/' },
   { title: 'Ders Programlarım', Icon: BsCalendar2Week, to: '/my_schedule' },
   { title: 'Ders Programı Düzenle', Icon: MdOutlineEdit, to: '/edit_schedule' },
-  { title: 'Ayarlar', Icon: FiSettings, to: '#' },
+  { title: 'Ders Seçimi', Icon: MdOutlineEdit, to: '/ders_secimi'},
+  { title: 'Ayarlar', Icon: FiSettings, to: '/ayarlar' },
   { title: 'Çıkış Yap', Icon: CgClose, to: '#' },
 ]
 

@@ -30,8 +30,8 @@ export default function FullScreenModal(props) {
                             </p>
                         </div>
                         <div className='absolute bottom-3 right-3 flex gap-3'>
-                            <button onClick={() => { props.setDeletingClass(""); }} className="px-4 py-1.5 min-w-[80px] text-red-400 bg-red-700/20 rounded-xl border border-red-900 hover:border-red-700 hover:shadow-lg transition-all duration-300">Hayır</button>
-                            <button className="px-4 py-1.5 min-w-[80px] text-green-400 bg-green-700/20 rounded-xl border border-green-900 hover:green-red-700 hover:shadow-lg transition-all duration-300">Evet</button>
+                            <button onClick={() => { props.setDeletingClass(""); }} className="px-4 py-1.5 min-w-[80px] text-red-400 bg-red-700/20 rounded-md border border-red-900 hover:border-red-700 hover:shadow-lg transition-all duration-300">Hayır</button>
+                            <button className="px-4 py-1.5 min-w-[80px] text-green-400 bg-green-700/20 rounded-md border border-green-900 hover:green-red-700 hover:shadow-lg transition-all duration-300">Evet</button>
                         </div>
                     </div>
                 </motion.div>
