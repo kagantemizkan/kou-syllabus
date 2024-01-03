@@ -45,12 +45,10 @@ export const Home = () => {
     };
     fetchData();
   }, []);
-  
+
 
   const checkUser = () => {
-
     if (user && user.id !== null && user.id !== undefined) {
-      // User exists and has 'ad' property
       return;
     } else {
       // User doesn't exist or 'ad' property is null or undefined
@@ -68,7 +66,7 @@ export const Home = () => {
             <Sidebar />
             <p>Ana Sayfa</p>
           </div>
-          <a href='https://www.kocaeli.edu.tr/' target="_blank" rel="noreferrer" className='flex gap-3 items-center px-4 py-2 text-lg text-zinc-200 bg-green-700/20 rounded-xl border border-green-900 hover:border-green-700 hover:shadow-lg transition-all duration-300'>
+          <a href='https://www.kocaeli.edu.tr/' target="_blank" rel="noreferrer" className='flex gap-3 items-center px-4 py-2 text-lg text-zinc-200 bg-green-700/20 rounded-lg border border-green-900 hover:border-green-700 hover:shadow-lg transition-all duration-300'>
             <img src={KOULogo} className='w-9' alt="Kocaeli Universitesi Logo" />
             <p>Kocaeli Üniversitesi</p>
           </a>
@@ -80,8 +78,8 @@ export const Home = () => {
 
           {/* SOL TARAF */}
           <div className=' flex flex-col gap-6 w-[426px]'>
-            <div className='flex rounded-[14px] max-h-60 border-2 border-zinc-800 hover:border-zinc-600 hover:shadow-lg transition-all duration-300'>
-              <img className='rounded-xl' src={images[currentImageIndex]} alt="" />
+            <div className='flex rounded-[9px] max-h-60 border-2 border-zinc-800 hover:border-zinc-600 hover:shadow-lg transition-all duration-300'>
+              <img className='rounded-lg' src={images[currentImageIndex]} alt="" />
             </div>
             <div className='flex flex-row gap-4'>
               <div className='pb-3 border-2 border-zinc-800 rounded-md w-52 flex flex-col gap-3 items-center hover:border-zinc-700 hover:shadow-lg transition-all duration-300'>
@@ -100,7 +98,7 @@ export const Home = () => {
               <div className='pb-3 border-2 border-zinc-800 rounded-md w-52 flex flex-col gap-3 items-center hover:border-zinc-700 hover:shadow-lg transition-all duration-300'>
                 <div className='px-4 py-2 min-w-full flex justify-center text-xl text-blue-200 bg-blue-800/20 rounded-t-[5px] font-medium'>Ders İşlemleri</div>
                 <div className='px-3 py-2 flex justify-between items-center text-pear-300 bg-pear-700/20 min-w-[164px] rounded-[4px] border border-pear-900 hover:border-pear-700 hover:shadow-lg transition-all duration-300'>
-                  Ders Düzenle
+                  Ders Ekle
                   <HiPencilSquare className='text-2xl' />
                 </div>
                 <div className='px-3 py-2 flex justify-between items-center text-antiqueSteel-300 bg-antiqueSteel-700/20 min-w-[164px] rounded-[4px] border border-antiqueSteel-900 hover:border-antiqueSteel-700 hover:shadow-lg transition-all duration-300'>
@@ -131,21 +129,28 @@ export const Home = () => {
           </div>
 
           {/* ORTA TARAF */}
-          <div className=' flex flex-col gap-6'>
+          <div className=' flex flex-col gap-6 min-w-[540px]'>
             <div className='font-semibold	text-2xl'>
               Yarınki Derslerim
             </div>
-            <div className='grid grid-cols-3 gap-3'>
-              {events.map((event) => (
-                <Event
-                  key={event.key}
-                  eventName={event.ders_adi}
-                  instructor={event.instructor}
-                  courseClass={event.courseClass}
-                  color={event.color}
-                />
-              ))}
+            <div className='grid gap-3'>
+              {user.sinifsenesi
+                ? <div className='flex gap-3 items-center justify-center px-3 py-2 text-red-400 bg-red-700/20 rounded-lg border border-red-900 hover:border-red-700 hover:shadow-lg transition-all duration-300'>
+                    <p>Lütfen ders seçiminizi yapınız!</p>
+                  </div>
+                : events.map((event) => (
+                  <Event
+                    key={event.key}
+                    eventName={event.ders_adi}
+                    instructor={user.hoca_unvan + " " + user.hoca_ad + " " + user.hoca_soyad}
+                    courseClass={event.sinif_kodu}
+                    color={event.renk}
+                  />
+                ))
+              }
             </div>
+
+
           </div>
           <div className=' flex flex-col gap-6'>
             <div className='font-semibold	text-2xl'>

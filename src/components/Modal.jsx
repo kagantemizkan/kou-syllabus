@@ -5,9 +5,7 @@ export default function FullScreenModal(props) {
 
     return (
         <AnimatePresence>
-
             {props.editMode && props.deletingClass && (
-
                 <motion.div
                     className='fixed inset-0 flex items-center justify-center z-50 bg-black/40'
                     initial={{ opacity: 0, backgroundColor: "rgba(0, 0, 0, 0)" }}
@@ -16,17 +14,18 @@ export default function FullScreenModal(props) {
                 >
                     <div className='relative border-2 border-zinc-800 bg-zinc-900 rounded-lg flex flex-col hover:shadow-lg transition-all duration-300'>
                         <p className='py-4 px-6 border-b-2 border-zinc-800'>
-                            <span className='font-bold'>{props.deletingClass} </span>dersini silmek istediğinizden emin misiniz?
+                            <span className='font-bold'>{props.deletingClass.ders_adi} </span>dersini silmek istediğinizden emin misiniz?
                         </p>
                         <div className='flex flex-col gap-1.5 pt-3 pb-[58px] px-5'>
                             <p>
-                                Öğretim Görevlisi: Doç. Dr. Vildan ÇETKİN
+                                {props.deletingClass.hoca_unvan + " " + props.deletingClass.hoca_ad + " " + props.deletingClass.hoca_soyad}
                             </p>
                             <p>
-                                Sınıf: 1044
+                                {props.deletingClass.sinif_kodu} 
                             </p>
                             <p>
-                                Saat: 9.00 - 10.00
+                                Saat: {props.deletingClass.baslangic}:00 - {props.deletingClass.baslangic + 1}:00
+
                             </p>
                         </div>
                         <div className='absolute bottom-3 right-3 flex gap-3'>

@@ -22,7 +22,7 @@ export const Login = () => {
   const [user, setUser] = useState({
     email: '',
     password: '',
-    userType: 'hocalar',
+    userType: '',
   });
 
   useEffect(() => {
@@ -85,6 +85,12 @@ export const Login = () => {
     user.email = enteredEmail;
     user.password = enteredPassword;
 
+    const username = user.email.split('@')[0];
+
+    user.userType = username.match(/^\d+$/) ? "student" : "hocalar";
+    
+    console.log(user.userType)
+
     if (!enteredEmail && !enteredPassword) {
       setEmailError(true);
       setPasswordError(true);
@@ -93,7 +99,6 @@ export const Login = () => {
     } else {
       setEmailError(!enteredEmail);
       setPasswordError(!enteredPassword);
-
       if (!enteredEmail) {
         showToastError('Email boş bırakılamaz.');
         setIsLoading(false);
@@ -136,11 +141,8 @@ export const Login = () => {
       <Toaster />
       <div className='flex flex-col items-center border-2 border-zinc-800 rounded-xl w-96 p-8 shadow-lg bg-zinc-800/20 hover:border-zinc-700 hover:shadow-lg transition-all duration-300'>
         <img src={KOULogo} className='w-32 mb-8' alt="Kocaeli Universitesi Logo" />
-
         <h2 className='text-2xl font-semibold mb-10 text-center'>Kocaeli Üniversitesi Syllbus'a Giriş Yap</h2>
-
         <form className='flex flex-col gap-4 items-center' onSubmit={handleSubmit}>
-
           <input
             name="email"
             value={email}
@@ -198,6 +200,7 @@ export const Login = () => {
           </div>
         </form>
       </div>
+                
     </motion.div>
   );
 };

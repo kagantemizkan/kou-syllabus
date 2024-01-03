@@ -58,14 +58,20 @@ export const Sidebar = () => {
               <div className="flex items-center justify-between p-5 border-b-2 border-gray-200 dark:border-zinc-800">
                 <div className='flex flex-row items-center gap-5'>
                   <img src={BlankProfilePic} className='w-12 rounded-full' alt="Profile Picture" />
-                  <div className='flex flex-col'>                 
-                    <span className='text-sm text-zinc-500 dark:text-zinc-300/80'>{user.hoca_unvan}</span> 
-                    <span>{user.hoca_ad + " " + user.hoca_soyad}</span>
+                  <div className='flex flex-col'>
+                    {user.sinifsenesi ?
+                      <span>{user.ogrenci_ad + " " + user.ogrenci_soyad}</span>
+                      : <>
+                        <span className='text-sm text-zinc-500 dark:text-zinc-300/80'>{user.hoca_unvan}</span>
+                        <span>{user.hoca_ad + " " + user.hoca_soyad}</span>
+                      </>
+                    }
+
                   </div>
 
                 </div>
                 <button onClick={toggleSidebar} className="p-3 border-2 border-gray-200 hover:border-gray-400 dark:border-zinc-800 rounded-xl dark:hover:border-zinc-700 hover:shadow-lg transition-all duration-300" aria-label="close sidebar">
-                  <AiOutlineRollback className='dark:text-zinc-200'/>
+                  <AiOutlineRollback className='dark:text-zinc-200' />
                 </button>
               </div>
               <ul>
@@ -114,7 +120,7 @@ const items = [
   { title: 'Ana Sayfa', Icon: BiHomeSmile, to: '/' },
   { title: 'Ders Programlarım', Icon: BsCalendar2Week, to: '/my_schedule' },
   { title: 'Ders Programı Düzenle', Icon: MdOutlineEdit, to: '/edit_schedule' },
-  { title: 'Ders Seçimi', Icon: MdOutlineEdit, to: '/ders_secimi'},
+  { title: 'Ders Seçimi', Icon: MdOutlineEdit, to: '/ders_secimi' },
   { title: 'Ayarlar', Icon: FiSettings, to: '/ayarlar' },
   { title: 'Çıkış Yap', Icon: CgClose, to: '#' },
 ]

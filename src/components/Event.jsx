@@ -17,11 +17,12 @@ export default function Event(props) {
         cyan: 'text-cyan-400 bg-cyan-700/20',
         pink: 'text-pink-400 bg-pink-700/20',
         violet: 'text-violet-400 bg-violet-700/20',
+        lime: 'text-lime-400 bg-lime-700/20',
     }
 
     if (props.eventName !== undefined && props.eventName !== null) {
         return (
-            <div div className="relative max-w-[195px] min-w-[165px] flex flex-col gap-1 text-zinc-200 border-2 border-zinc-800 rounded-xl hover:border-zinc-700 hover:shadow-lg transition-all duration-300">
+            <div className="relative max-w-[195px] min-w-[165px] flex flex-col gap-1 text-zinc-200 border-2 border-zinc-800 rounded-xl hover:border-zinc-700 hover:shadow-lg transition-all duration-300">
                 <div className={`flex rounded-[10.5px] p-3 ${colorVariants[props.color]}`}>
                     <div>
                         <GoDotFill className='pt-[4px] text-[16px]' />
@@ -38,7 +39,7 @@ export default function Event(props) {
                     {props.editMode &&
                         <>
                             <motion.button
-                                onClick={() => props.setDeletingClass(props.eventName)}
+                                onClick={() => props.setDeletingClass(props.eventt)}
                                 initial={{ opacity: 0, scale: 0.1 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.6 }}
