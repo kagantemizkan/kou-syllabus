@@ -6,7 +6,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
     const [error, setError] = useState(false);
-    
+
     useEffect(() => {
         localStorage.setItem('user', JSON.stringify(currentUser));
     }, [currentUser]);
@@ -19,16 +19,34 @@ export const AuthContextProvider = ({ children }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', 
+                credentials: 'include',
                 body: JSON.stringify(user),
             });
             const data = await res.json();
             console.log(data);
-            if(data.ogrenci_id !== null && data.ogrenci_id !== undefined) {
+            if (data.ogrenci_id !== null && data.ogrenci_id !== undefined) {
                 data.id = data.ogrenci_id;
                 delete data.ogrenci_id;
             }
-            setCurrentUser(data); 
+            setCurrentUser(data);
+            return data;
+        } catch (err) {
+            console.log(err.message || "Bir hata oluştu");
+        }
+    };
+
+    const register = async (user) => {
+        try {
+            const res = await fetch("http://localhost:8800/auth/register", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(user),
+            });
+            const data = await res.json();
+            console.log(data);
             return data;
         } catch (err) {
             console.log(err.message || "Bir hata oluştu");
@@ -55,7 +73,7 @@ export const AuthContextProvider = ({ children }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', 
+                credentials: 'include',
             });
             const data = await res.json();
             console.log(data)
@@ -72,7 +90,7 @@ export const AuthContextProvider = ({ children }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', 
+                credentials: 'include',
             });
             const data = await res.json();
             return data
@@ -88,7 +106,7 @@ export const AuthContextProvider = ({ children }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', 
+                credentials: 'include',
             });
             const data = await res.json();
             return data
@@ -104,19 +122,68 @@ export const AuthContextProvider = ({ children }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', 
-                body: JSON.stringify({ lessonsIDs }), 
+                body: JSON.stringify({ ders_id: lessonsIDs }),
             });
             const data = await res.json();
+            console.log("fdsfdsf: ", studentID, lessonsIDs)
+            console.log(data)
             return data
         } catch (err) {
+            console.log("fdsfdsf: ", studentID, JSON.stringify({ ders_id: lessonsIDs }))
             console.log(err.message || "Bir hata oluştu");
         }
     }
 
 
+    const addLesson = async (hocaID, lessonName, lessonID, lessonYear, kontenjan) => {
+        try {
+            const res = await fetch(`http://localhost:8800/lesson/addLesson/${hocaID}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body:
+                    JSON.stringify({
+                        dersAd: lessonName,
+                        dersKodu: lessonID,
+                        kontenjan: kontenjan,
+                        sene: lessonYear
+                    }),
+            });
+            const data = await res.json();
+            console.log(data)
+            return data
+        } catch (err) {
+            console.log(JSON.stringify({
+                dersAd: lessonName,
+                dersKodu: lessonID,
+                kontenjan: kontenjan,
+                sene: lessonYear
+            }),)
+            console.log(err.message || "Bir hata oluştu");
+        }
+    }
+
+    const createProgram = async () => {
+        try {
+            const res = await fetch(`http://localhost:8800/program/k`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+            });
+            const data = await res.json();
+            console.log(data)
+            return data
+        } catch (err) {
+            console.log(err.message || "Bir hata oluştu");
+        }
+    };
+
+
     return (
-        <AuthContext.Provider value={{ currentUser, login, logout, hocaDersler, studentLessons, getProgram, postSelectedStudentLessons, error }}>
+        <AuthContext.Provider value={{ currentUser, login, logout, hocaDersler, studentLessons, getProgram, postSelectedStudentLessons, addLesson, register, createProgram, error }}>
             {children}
         </AuthContext.Provider>
     );

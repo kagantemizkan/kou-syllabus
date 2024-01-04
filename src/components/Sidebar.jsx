@@ -1,4 +1,4 @@
-import { useRef, useState, useContext } from 'react'
+import { useRef, useState, useContext, useEffect } from 'react'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useClickAway } from 'react-use'
@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 export const Sidebar = () => {
   const { logout } = useContext(AuthContext)
   const navigate = useNavigate()
-
+  const [userType, setUserType] = useState()
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
   useClickAway(ref, () => setOpen(false))
@@ -24,7 +24,32 @@ export const Sidebar = () => {
 
   const user = JSON.parse(localStorage.getItem("user"));
 
+  const items = []
 
+  useEffect(() => {
+    user.sinifsenesi === null || user.sinifsenesi === undefined ? setUserType("hoca") : setUserType("ogrenci")
+  }, [])
+
+  if (userType === "hoca") {
+    items.push(
+      { title: 'Ana Sayfa', Icon: BiHomeSmile, to: '/' },
+      { title: 'Ders Programlarım', Icon: BsCalendar2Week, to: '/my_schedule' },
+      { title: 'Ders Programı Düzenle', Icon: MdOutlineEdit, to: '/edit_schedule' },
+      { title: 'Ayarlar', Icon: FiSettings, to: '/ayarlar' },
+      { title: 'Çıkış Yap', Icon: CgClose, to: '#' },
+    )
+  } else {
+    items.push(
+      { title: 'Ana Sayfa', Icon: BiHomeSmile, to: '/' },
+      { title: 'Ders Programlarım', Icon: BsCalendar2Week, to: '/my_schedule' },
+      { title: 'Ders Programı Düzenle', Icon: MdOutlineEdit, to: '/edit_schedule' },
+      { title: 'Ders Seçimi', Icon: MdOutlineEdit, to: '/ders_secimi' },
+      { title: 'Ayarlar', Icon: FiSettings, to: '/ayarlar' },
+      { title: 'Çıkış Yap', Icon: CgClose, to: '#' },
+    )
+  }
+
+  
   const logoutFuncs = async () => {
     toggleSidebar(); // Close the sidebar when logout is triggered
     await logout(); // Trigger the logout function
@@ -116,14 +141,7 @@ export const Sidebar = () => {
   )
 }
 
-const items = [
-  { title: 'Ana Sayfa', Icon: BiHomeSmile, to: '/' },
-  { title: 'Ders Programlarım', Icon: BsCalendar2Week, to: '/my_schedule' },
-  { title: 'Ders Programı Düzenle', Icon: MdOutlineEdit, to: '/edit_schedule' },
-  { title: 'Ders Seçimi', Icon: MdOutlineEdit, to: '/ders_secimi' },
-  { title: 'Ayarlar', Icon: FiSettings, to: '/ayarlar' },
-  { title: 'Çıkış Yap', Icon: CgClose, to: '#' },
-]
+
 
 const framerSidebarBackground = {
   initial: { opacity: 0 },

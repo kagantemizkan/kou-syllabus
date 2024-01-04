@@ -8,6 +8,7 @@ import { TiUserAddOutline } from "react-icons/ti";
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context.jsx';
 import { motion, useAnimation } from 'framer-motion';
+import Dropdown from '../components/Dropdown.jsx';
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ export const Register = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
 
+  const [userType, setUserType] = useState(); 
+  const [hocaUnvan, setHocaUnvan] = useState(); 
 
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -27,8 +30,12 @@ export const Register = () => {
 
 
   const [user, setUser] = useState({
-    kullaniciAdi: '',
-    sifre: '',
+    userType: "",
+    email: "",
+    password: "",
+    ad: "",
+    soyad: "",
+    unvan: "",
   });
 
   useEffect(() => {
@@ -45,7 +52,7 @@ export const Register = () => {
     }
   };
 
-  const { login } = useContext(AuthContext);
+  const { register, login } = useContext(AuthContext);
 
   const showToastError = (message) => {
     toast.error(message, {
@@ -84,58 +91,82 @@ export const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+  
     const enteredEmail = email.trim();
     const enteredPassword = password.trim();
-    const enderedName = name.trim();
+    const enteredName = name.trim();
     const enteredSurname = surname.trim();
-
-    user.kullaniciAdi = enteredEmail;
-    user.sifre = enteredPassword;
-
-    if (!enteredEmail && !enteredPassword && !enderedName && !enteredSurname) {
-      setEmailError(true);
-      setPasswordError(true);
-      setNameError(true);
-      setSurnameError(true);
-      showToastError('Lütfen gerekli yerleri doldurun.');
-      setIsLoading(false);
-    } else {
+  
+    if (!enteredEmail || !enteredPassword || !enteredName || !enteredSurname) {
       setEmailError(!enteredEmail);
       setPasswordError(!enteredPassword);
-
-      if (!enteredEmail) {
-        showToastError('Email boş bırakılamaz.');
-        setIsLoading(false);
-      } else if (!enteredPassword) {
-        showToastError('Şifre boş bırakılamaz.');
-        setIsLoading(false);
-      } else {
-        const result = await login(user);
-
-        if (result === 'Kullanıcı bulunamadı') {
-          showToastError(result + '.');
-          setIsLoading(false);
-          return;
-        }
-
-        if (result === 'Parola hatası') {
-          showToastError(result + '.');
-          setIsLoading(false);
-          return;
-        }
-        setIsLoading(false);
-        showToastSucces('Giriş başarılı!');
-        navigate('/');
-      }
+      setNameError(!enteredName);
+      setSurnameError(!enteredSurname);
+  
+      showToastError('Lütfen gerekli yerleri doldurun.');
+      setIsLoading(false);
+      return;
     }
+  
+    setEmailError(false);
+    setPasswordError(false);
+    setNameError(false);
+    setSurnameError(false);
+  
+    const newUser = {
+      userType: userType,
+      email: enteredEmail,
+      password: enteredPassword,
+      ad: enteredName,
+      soyad: enteredSurname,
+      unvan: hocaUnvan, 
+    };
+    
+    const registerResult = await register(newUser);
+  
+    if (registerResult === 'Kullanıcı bulunamadı' || registerResult === 'Parola hatası') {
+      showToastError(registerResult + '.');
+      setIsLoading(false);
+      return;
+    }
+  
+    const loginResult = await login({ email: enteredEmail, password: enteredPassword });
+  
+    if (loginResult === 'Kullanıcı bulunamadı' || loginResult === 'Parola hatası') {
+      showToastError(loginResult + '.');
+      setIsLoading(false);
+      return;
+    }
+  
+    setIsLoading(false);
+    showToastSucces('Giriş başarılı!');
+    navigate('/');
   };
+  
+  
+  
 
   const pageAnimation = useAnimation();
 
   useEffect(() => {
     pageAnimation.start({ opacity: 1, y: 0, transition: { duration: 0.45 } });
   }, [pageAnimation]);
+
+  const userTypeButtons = [
+    { label: 'Öğretim Görevlisi', year: "Öğretim Görevlisi", className: 'w-full px-4 py-2 border-b-2 dark:border-zinc-800 hover:text-zinc-50 text-left' },
+    { label: 'Öğrenci', year: "Öğrenci", className: 'w-full px-4 py-2 hover:text-zinc-50 text-left' },
+  ];
+
+
+  const hocaUnvanButtons = [
+    { label: 'Doç. Dr.', year: "Doç. Dr.", className: 'w-full px-4 py-2 border-b-2 dark:border-zinc-800 hover:text-zinc-50 text-left' },
+    { label: 'Yrd. Doç. Dr.', year: "Yrd. Doç. Dr.", className: 'w-full px-4 py-2 border-b-2 dark:border-zinc-800 hover:text-zinc-50 text-left' },
+    { label: 'Öğr. Gör.', year: "Öğr. Gör.", className: 'w-full px-4 py-2 border-b-2 dark:border-zinc-800 hover:text-zinc-50 text-left' },
+    { label: 'Dr.', year: "Dr.", className: 'w-full px-4 py-2 border-b-2 dark:border-zinc-800 hover:text-zinc-50 text-left' },
+    { label: 'Prof.', year: "Prof.", className: 'w-full px-4 py-2 border-b-2 dark:border-zinc-800 hover:text-zinc-50 text-left' },
+    { label: 'Arş. Gör.', year: "Arş. Gör.", className: 'w-full px-4 py-2 border-b-2 dark:border-zinc-800 hover:text-zinc-50 text-left' },
+    { label: 'Uzman', year: "Uzman", className: 'w-full px-4 py-2 hover:text-zinc-50 text-left' },
+  ];
 
   return (
     <motion.div
@@ -155,8 +186,8 @@ export const Register = () => {
 
         <h2 className='text-2xl font-semibold mb-10 text-center w-72'>Kocaeli Üniversitesi Syllbus'a Kayıt Ol</h2>
 
-        <form className='flex flex-col gap-3 items-center' onSubmit={handleSubmit}>
-          
+        <div className='flex flex-col gap-3 items-center'>
+
           <div className='flex flex-row gap-3 max-w-[320px]'>
             <input
               name="name"
@@ -177,6 +208,8 @@ export const Register = () => {
               type="text"
             />
           </div>
+          <Dropdown register={true} selectedYear={userType} setSelectedYear={setUserType} buttons={userTypeButtons} dropdownName="Kullanıcı Türü" />
+          { userType === "Öğretim Görevlisi" && <Dropdown register={true} selectedYear={hocaUnvan} setSelectedYear={setHocaUnvan} buttons={hocaUnvanButtons} dropdownName="Kullanıcı Türü" />}
           <input
             name="email"
             value={email}
@@ -199,7 +232,7 @@ export const Register = () => {
           <div className="flex flex-row gap-4 mt-3">
             <motion.button
               type="submit"
-              onClick={() => handleSubmit()}
+              onClick={(e) => handleSubmit(e)}
               className={`gap-2 ${isLoading == null ? null : isLoading ? 'animation1' : 'animation2'} h-[41px] w-[132px] flex items-center px-4 py-2 text-orange-400 bg-orange-700/20 rounded-md border border-orange-900 hover:border-orange-700 hover:shadow-lg transition-all duration-300`}
             >
               {isLoading ? (
@@ -225,7 +258,7 @@ export const Register = () => {
               )}
             </motion.button>
           </div>
-        </form>
+        </div>
       </div>
     </motion.div>
   );

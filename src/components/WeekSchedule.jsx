@@ -45,10 +45,21 @@ const WeekSchedule = (props) => {
             });
     }, [selectedYear]);
 
+    
+    const buttons = [
+        { label: '1. Yıl Dersleri', year: 1, className: 'w-full px-4 py-2 border-b-2 dark:border-zinc-800 hover:text-zinc-50' },
+        { label: '2. Yıl Dersleri', year: 2, className: 'w-full px-4 py-2 border-b-2 dark:border-zinc-800 hover:text-zinc-50' },
+        { label: '3. Yıl Dersleri', year: 3, className: 'w-full px-4 py-2 border-b-2 dark:border-zinc-800 hover:text-zinc-50' },
+        { label: '4. Yıl Dersleri', year: 4, className: 'w-full px-4 py-2 hover:text-zinc-50' },
+    ];
+
     return (
         <>
-            <Dropdown setSelectedYear={setSelectedYear} />
-            <div className="rounded-xl my-2 overflow-hidden border-2 border-zinc-800 bg-zinc-800/20 shadow-lg">
+            <div className='max-w-[160px]'>
+                 <Dropdown weekSchedule={true} selectedYear={selectedYear} setSelectedYear={setSelectedYear} dropdownName="Yıl Seçimi" buttons={buttons} />
+
+            </div>
+            <div className="rounded-xl my-2 overflow-hidden border-2 border-zinc-800 bg-zinc-800/20 shadow-lg mt-3">
                 <table className="w-full table-auto">
                     <thead>
                         <tr>

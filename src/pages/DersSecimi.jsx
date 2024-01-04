@@ -83,7 +83,7 @@ export const DersSecimi = () => {
                 <div>
                     <p className='font-semibold	text-2xl pt-7 pb-2 pl-0.5'>Seçebiliceğiniz Dersler</p>
                     {dersler.length === 0 ?
-                        <p className='flex flex-row items-center gap-2 border-2 w-max p-2 mt-3 rounded-xl text-red-400 bg-red-700/20 border-red-900'>
+                        <p className='flex flex-row items-center gap-2 border-2 w-max p-2 mt-3 rounded-xl text-yellow-400 bg-yellow-700/20 border-yellow-900'>
                             <FaExclamation /> Seçebiliceğiniz ders kalmamıştır.
                         </p> :
 
@@ -127,7 +127,7 @@ export const DersSecimi = () => {
 
                 <div className='mb-5'>
                     {secilenDersler.length === 0 ?
-                        <p className='flex flex-row items-center gap-2 border-2 w-max p-2 mt-4 rounded-xl text-green-400 bg-green-700/20 border-green-900'>
+                        <p className='flex flex-row items-center gap-2 border-2 w-max p-2 mt-4 rounded-xl text-yellow-400 bg-yellow-700/20 border-yellow-900'>
                             <FaExclamation /> Lütfen ders seçiniz.
                         </p> :
                         <>
@@ -166,7 +166,7 @@ export const DersSecimi = () => {
                                     </tbody>
                                 </table>
                             </div>
-                            <button onClick={() => postSelectedStudentLessons(user.id, secilenDersler)} className='flex ml-auto flex-row items-center gap-2 border-2 w-max py-2 px-3 mt-4 rounded-xl text-green-400 bg-green-700/20 border-green-900 hover:border-green-700 hover:shadow-lg transition-all duration-300'>
+                            <button onClick={() => postSelectedStudentLessons(user.id, secilenDersler.map((lesson) => lesson.ders_id))} className='flex ml-auto flex-row items-center gap-2 border-2 w-max py-2 px-3 mt-4 rounded-xl text-green-400 bg-green-700/20 border-green-900 hover:border-green-700 hover:shadow-lg transition-all duration-300'>
                                  Onayla <FaCheck />
                             </button>
                         </>

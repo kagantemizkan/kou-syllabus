@@ -126,7 +126,7 @@ export const Settings = () => {
                             <input
                                 name="oldpassword"
                                 placeholder="Eski Şifre"
-                                className={`w-80 font-sans text-sm font-normal leading-6 p-2 rounded-md text-gray-300 bg-zinc-800 bordershadow-sm hover:border-blue-100 focus:border-blue-300 focus:ring-2 focus:ring-zinc-500 hover:shadow-lg transition-all duration-300`}
+                                className={`w-80 font-sans text-sm font-normal leading-6 p-2 mb-3 rounded-md text-gray-300 bg-zinc-800 bordershadow-sm hover:border-blue-100 focus:border-blue-300 focus:ring-2 focus:ring-zinc-500 hover:shadow-lg transition-all duration-300`}
                                 type="text"
                             />
                             <input

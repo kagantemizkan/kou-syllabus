@@ -38,7 +38,7 @@ export const Programlarım = () => {
           className="flex gap-3 items-center px-4 py-2 text-lg text-zinc-200 bg-purple-700/20 rounded-xl border border-purple-900 hover:border-purple-700 hover:shadow-lg active:border-purple-500 transition-all duration-300"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }} // 0.6 saniye gecikme ekledik
+          transition={{ delay: 0.4 }} 
         >
           <p className='text-base text font-medium'>Dersleri Düzenle</p>
           <MdOutlineEdit className="text-[26px]" />
