@@ -12,12 +12,17 @@ export default function Event(props) {
         yellow: 'text-yellow-400 bg-yellow-700/20',
         orange: 'text-orange-400 bg-orange-700/20',
         blue: 'text-blue-400 bg-blue-700/20',
+        sky: 'text-sky-400 bg-sky-700/20',
         amber: 'text-amber-400 bg-amber-700/20',
         green: 'text-green-400 bg-green-700/20',
         cyan: 'text-cyan-400 bg-cyan-700/20',
         pink: 'text-pink-400 bg-pink-700/20',
         violet: 'text-violet-400 bg-violet-700/20',
         lime: 'text-lime-400 bg-lime-700/20',
+        teal: 'text-teal-400 bg-teal-700/20',
+        indigo: 'text-indigo-400 bg-indigo-700/20',
+        purple: 'text-purple-400 bg-purple-700/20',
+        rose: 'text-rose-400 bg-rose-700/20',
     }
 
     if (props.eventName !== undefined && props.eventName !== null) {
