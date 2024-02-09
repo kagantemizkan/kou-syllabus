@@ -10,12 +10,16 @@ Front-End tarafında, kullanıcı deneyimini zenginleştirmek adına Framer Moti
 
 ## 
 [screenshot](https://github.com/kagantemizkan/kou-syllabus/assets/46727689/51a1ac90-07b0-449a-90d4-0f9eb0eedcfa)
-## 
-[screenshot](https://github.com/kagantemizkan/kou-syllabus/assets/46727689/f2bd58d6-c78b-4902-8e44-1923e3015c7a)
+
 ## 
 [screenshot](https://github.com/kagantemizkan/kou-syllabus/assets/46727689/26bd941d-2911-40f6-a9d9-e2e0bdcf2521)
+
+## 
+[screenshot](https://github.com/kagantemizkan/kou-syllabus/assets/46727689/f2bd58d6-c78b-4902-8e44-1923e3015c7a)
+
 ## 
 ![screenshot](https://github.com/kagantemizkan/kou-syllabus/assets/46727689/e29f814f-eefb-4bbb-a254-4d186e7afd98)
+
 ##
 ![screenshot](https://github.com/kagantemizkan/kou-syllabus/assets/46727689/0630555b-7682-438c-a9d8-9c9e5dbd56f8)
 ##
