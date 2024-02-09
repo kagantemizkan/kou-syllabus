@@ -1,10 +1,12 @@
-https://docs.google.com/document/d/1KA5xXbsAP99A6CgPEbdZCVOc7bGs8T2ogy29ZCV_kBo/edit?usp=sharing
-
-### KOU Syllbus
+##	**KOU Syllbus** 
 
 Üniversite'de, Yazılım Laboratuvarı kapsamında, iki takım arkadaşımla birlikte KOU Syllabus adında otomatik ders programı hazırlayıcı geliştirdik. Bu projede, ben Front-End kısmını üstlendim ve Vite+React kullanarak kullanıcı arayüzünü oluşturdum. Diğer iki arkadaşım ise backend kısmını başarıyla geliştirdiler.
 
 Front-End tarafında, kullanıcı deneyimini zenginleştirmek adına Framer Motion kütüphanesini kullanarak animasyonlar ekledim. Ayrıca, stil düzenlemeleri için Tailwind CSS'i tercih ettim, bu sayede hızlı ve tutarlı bir tasarım oluşturabildik. Tailwind CSS'in sunduğu modüler ve özelleştirilebilir yapı, projemizin görsel estetiğini güçlendirdi. 
+
+## Proje Raporu Linki
+
+[Google Docs](https://docs.google.com/document/d/1KA5xXbsAP99A6CgPEbdZCVOc7bGs8T2ogy29ZCV_kBo/)
 
 ## Ekran Görüntüleri
 
