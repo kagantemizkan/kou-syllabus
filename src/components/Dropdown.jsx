@@ -3,9 +3,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaAngleDown } from 'react-icons/fa';
 
-const Dropdown = ({ setSelectedYear, dropdownName, buttons, selectedYear, weekSchedule }) => {
+const Dropdown = ({ topText, buttons, setSelected, selected }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [isTopTextGreen, setIsTopTextGreen] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -14,8 +15,17 @@ const Dropdown = ({ setSelectedYear, dropdownName, buttons, selectedYear, weekSc
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsOpen(false);
+      setIsTopTextGreen(false); // Dropdown dışına tıklanınca yeşil rengi kaldır
     }
   };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -35,23 +45,58 @@ const Dropdown = ({ setSelectedYear, dropdownName, buttons, selectedYear, weekSc
     closed: { rotate: 0 },
   };
 
-  const handleYearSelection = (year) => {
-    console.log(year)
-    setSelectedYear(year);
+  const handleSelection = (label) => {
+    console.log(label)
+    setSelected(label)
     setIsOpen(false);
   };
 
+  const handleInputChange = (e) => {
+    setSelected(e.target.value);
+  };
+
+  const handleFocus = () => {
+    setIsTopTextGreen(true);
+  };
+
+  const handleBlur = () => {
+    setIsTopTextGreen(false);
+  };
 
   return (
     <div ref={dropdownRef} className="relative inline-block text-left w-full">
       <button
-        type="button"
         onClick={toggleDropdown}
-        className="inline-flex items-center gap-3.5 py-1.5 px-3 justify-between w-full border-2 dark:border-zinc-800 border-gray-200 hover:border-gray-400 rounded-md dark:hover:border-zinc-700 hover:shadow-lg transition-all duration-300"
+        className={`inline-flex bg-[#F4F5F5] items-center gap-3.5 py-1.5 px-3 justify-between w-64 ${isTopTextGreen ? 'border-[#08A250] border-2' : 'border-[#F4F5F5] border-2'}  hover:border-[#08A250] rounded-2xl hover:shadow-sm transition-all duration-300`}
       >
-        {weekSchedule ?
-          <p>{selectedYear ? <p>{selectedYear}. Yıl Dersleri</p> : dropdownName}</p> : <p>{selectedYear ? <p>{selectedYear}</p> : dropdownName}</p>
-        }
+        <div className='flex flex-col ml-2'>
+        <p className={` text-left ${isTopTextGreen ? 'text-[#08A250]' : ''}`}>{topText}</p>
+
+          {isOpen ?
+            <input
+              autoFocus 
+              type="text"
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              value={selected}
+              onChange={handleInputChange}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#F4F5F5] border-none max-w-[195px] font-semibold text-xl focus:outline-none"
+            />
+
+            :
+
+            (selected == "" ?
+              <p className='text-left text-lg'>
+                İl adı yazın
+              </p> :
+              <p className='text-left font-semibold text-xl'>
+              {selected}
+              </p>
+            )
+          }
+        </div>
+        
         <motion.span
           animate={isOpen ? 'open' : 'closed'}
           variants={arrowVariants}
@@ -67,7 +112,7 @@ const Dropdown = ({ setSelectedYear, dropdownName, buttons, selectedYear, weekSc
             animate="visible"
             exit="hidden"
             variants={dropdownVariants}
-            className="absolute z-50 w-full mt-1 rounded-md border-2 bg-zinc-900 dark:border-zinc-800 border-gray-200 shadow-md hover:border-gray-400 dark:hover:border-zinc-700 hover:shadow-lg transition-all duration-300"
+            className="absolute z-50 w-full mt-1 rounded-md border-2 bg-white dark:border-zinc-800 border-gray-200 shadow-md hover:border-gray-300 dark:hover:border-zinc-700 hover:shadow-lg transition-all duration-300"
           >
             <div
               className="py-1"
@@ -78,7 +123,7 @@ const Dropdown = ({ setSelectedYear, dropdownName, buttons, selectedYear, weekSc
               {buttons.map((button, index) => (
                 <button
                   key={index}
-                  onClick={() => handleYearSelection(button.year)}
+                  onClick={() => handleSelection(button.label)}
                   className={button.className}
                   role="menuitem"
                 >

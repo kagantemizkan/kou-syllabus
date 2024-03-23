@@ -134,7 +134,6 @@ export const AuthContextProvider = ({ children }) => {
         }
     }
 
-
     const addLesson = async (hocaID, lessonName, lessonID, lessonYear, kontenjan) => {
         try {
             const res = await fetch(`http://localhost:8800/lesson/addLesson/${hocaID}`, {
@@ -181,9 +180,24 @@ export const AuthContextProvider = ({ children }) => {
         }
     };
 
+    const getselectedStudentLessons = async (studentID) => {
+        try {
+            const res = await fetch(`http://localhost:8800/lesson/selectedStudentLessons/${studentID}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const data = await res.json();
+            console.log(data)
+            return data
+        } catch (err) {
+            console.log(err.message || "Bir hata oluştu");
+        }
+    }
 
     return (
-        <AuthContext.Provider value={{ currentUser, login, logout, hocaDersler, studentLessons, getProgram, postSelectedStudentLessons, addLesson, register, createProgram, error }}>
+        <AuthContext.Provider value={{ currentUser, login, logout, hocaDersler, studentLessons, getProgram, postSelectedStudentLessons, addLesson, register, createProgram, getselectedStudentLessons, error }}>
             {children}
         </AuthContext.Provider>
     );
